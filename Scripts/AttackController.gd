@@ -5,7 +5,7 @@ class_name AttackController
 
 
 
-var anim_player: AnimationPlayer
+var anim_player: AnimatedSprite2D
 var queued_attack = "" 
 var attacking_in_progress = false
 var combo_timer: Timer
@@ -21,7 +21,7 @@ func _ready():
 	call_deferred("add_child", combo_timer)
 	
 
-func initialize(_anim_player: AnimationPlayer):
+func initialize(_anim_player: AnimatedSprite2D):
 	anim_player = _anim_player
 	anim_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
 	
@@ -57,7 +57,7 @@ func _on_combo_timeout():
 	
 
 func _on_animation_finished(anim_name):
-	if anim_name.begins_with("attackstring"):
+	if anim_name.begins_with("AttackString"):
 		if queued_attack != "":
 			play_attack_animation(queued_attack)
 			queued_attack = ""

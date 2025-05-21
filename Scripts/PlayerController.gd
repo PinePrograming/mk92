@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var attack_controller = $AttackController
-@onready var anim_player = $AnimationPlayer
+@onready var anim_player = $AnimatedSprite2D
 var is_attacking = false
 
 const SPEED = 300.0
@@ -20,6 +20,11 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
+	if not is_attacking:
+		if velocity.x != 0:
+			$AnimatedSprite2D.play("Walk")
+		else:
+			$AnimatedSprite2D.play("Idle")
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -38,7 +43,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	if Input.is_action_just_pressed("Attack1"):
-		$AnimationPlayer.play("AttackString1")
+		$AnimatedSprite2D.play("AttackString1")
 		is_attacking = true
 func ready_for_input():
 	can_input = true
@@ -59,6 +64,6 @@ func _unhandled_input(event):
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	pass # Replace with function body.
 
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_AnimatedSprite2D_animation_finished(anim_name):
 	if anim_name == "AttackString1":
 		is_attacking = false

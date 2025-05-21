@@ -15,10 +15,15 @@ var can_input = true
 func _physics_process(delta: float) -> void:
 	if is_attacking:
 		return #this should skip idle/move anim should I be attacking
-	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	
+	if Input.is_action_just_pressed("Attack1"):
+		$AnimatedSprite2D.play("AttackString1")
+		is_attacking = true
+	
+	
 
 	if not is_attacking:
 		if velocity.x != 0:
@@ -42,9 +47,7 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	
-	if Input.is_action_just_pressed("Attack1"):
-		$AnimatedSprite2D.play("AttackString1")
-		is_attacking = true
+	
 func ready_for_input():
 	can_input = true
 
@@ -61,9 +64,10 @@ func _unhandled_input(event):
 		
 
 
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	pass # Replace with function body.
-
 func _on_AnimatedSprite2D_animation_finished(anim_name):
 	if anim_name == "AttackString1":
 		is_attacking = false
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cjoniu74evphn"]
+[gd_scene load_steps=37 format=3 uid="uid://cjoniu74evphn"]
 
 [ext_resource type="Script" uid="uid://b08lakq1dkj6" path="res://Scripts/PlayerController.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://cu1jcso450afl" path="res://Assets/SMS Ranger Free Files/SMS_Ranger_Punch_2.png" id="1_v0iea"]
@@ -235,57 +235,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_gymyn"]
-resource_name = "AttackString1"
-step = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"ready_for_input"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_pu2lt"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pu2lt"]
-_data = {
-&"AttackString1": SubResource("Animation_gymyn"),
-&"RESET": SubResource("Animation_pu2lt")
-}
-
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_cvnsp")
 
@@ -298,13 +247,8 @@ sprite_frames = SubResource("SpriteFrames_3smsa")
 animation = &"AttackString1"
 autoplay = "Idle"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_pu2lt")
-}
-
 [node name="AttackController" type="Node" parent="."]
 script = ExtResource("12_pu2lt")
 metadata/_custom_type_script = "uid://g5keeoaj07mw"
 
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

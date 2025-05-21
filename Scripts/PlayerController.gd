@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var attack_controller = $AttackController
 @onready var anim_player = $AnimationPlayer
-
+var is_attacking = false
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -13,6 +13,9 @@ var can_input = true
 
 
 func _physics_process(delta: float) -> void:
+	if is_attacking:
+		return #this should skip idle/move anim should I be attacking
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -34,6 +37,9 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	
+	if Input.is_action_just_pressed("Attack1"):
+		$AnimationPlayer.play("AttackString1")
+		is_attacking = true
 func ready_for_input():
 	can_input = true
 
@@ -48,3 +54,11 @@ func _unhandled_input(event):
 	if event.is_action_pressed("Attack1"):
 		attack_controller.start_attack("Attack1")
 		
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	pass # Replace with function body.
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "AttackString1":
+		is_attacking = false

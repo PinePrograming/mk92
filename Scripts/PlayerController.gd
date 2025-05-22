@@ -53,7 +53,7 @@ func ready_for_input():
 
 func _input(event):
 	if event.is_action_pressed("Attack1"):
-		attack_controller.handle_named_attack()
+		attack_controller.handle_named_attack() #The error is HERE
 
 func _ready():
 	attack_controller.initialize(anim_player)

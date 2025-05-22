@@ -3,8 +3,6 @@ extends Node
 
 class_name AttackController
 
-
-
 var anim_player: AnimatedSprite2D
 var queued_attack = "" 
 var attacking_in_progress = false

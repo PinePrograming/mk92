@@ -51,12 +51,17 @@ func _physics_process(delta: float) -> void:
 func ready_for_input():
 	can_input = true
 
-func _input(event):
-	if event.is_action_pressed("Attack1"):
-		attack_controller.handle_named_attack() #The error is HERE
-
 func _ready():
 	attack_controller.initialize(anim_player)
+	attack_controller = get_node("AttackController")
+
+func _input(event):
+	if event.is_action_pressed("Attack1"):
+		if attack_controller and attack_controller.has_method("handle_named_attack"):
+			attack_controller.handle_named_attack()
+		else:
+			print("Error: attack_controller is not set or method handle_named_attack() is missing.")
+
 
 func _unhandled_input(event):
 	if event.is_action_pressed("Attack1"):
